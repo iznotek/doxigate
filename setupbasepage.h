@@ -1,7 +1,7 @@
 #ifndef SETUPBASEPAGE_H
 #define SETUPBASEPAGE_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class ConfigOption;
 class ConfigEnum;

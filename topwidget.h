@@ -8,7 +8,7 @@
 #ifndef TOPWIDGET_H_
 #define TOPWIDGET_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 class iisToolButton;
 

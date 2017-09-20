@@ -13,7 +13,7 @@
 #ifndef IISLINEEDIT_H_
 #define IISLINEEDIT_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 /**
  * \class iisLineEdit

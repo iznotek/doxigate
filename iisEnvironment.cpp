@@ -11,7 +11,7 @@
 #include <shlobj.h>
 #endif
 
-#include <QtGui>
+#include <QtWidgets>
 
 iisEnvironment::iisEnvironment()
 {
@@ -108,7 +108,7 @@ void iisEnvironment::openFileDir(const QString &name)
     {
         // last chance on Windows
 #ifdef Q_OS_WIN32
-        ShellExecuteA(NULL, "open", outDir.toAscii().data(), NULL, NULL, SW_SHOW);
+        ShellExecuteA(NULL, "open", outDir.toLatin1().data(), NULL, NULL, SW_SHOW);
 #endif
     }
 }

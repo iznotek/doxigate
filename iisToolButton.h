@@ -13,7 +13,7 @@
 #ifndef IISTOOLBUTTON_H_
 #define IISTOOLBUTTON_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 class iisToolButton : public QToolButton
 {

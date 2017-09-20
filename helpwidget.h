@@ -1,7 +1,7 @@
 #ifndef HELPWIDGET_H
 #define HELPWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class ConfigOption;
 

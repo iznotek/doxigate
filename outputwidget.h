@@ -8,7 +8,7 @@
 #ifndef OUTPUTWIDGET_H_
 #define OUTPUTWIDGET_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 enum MessageType
 {

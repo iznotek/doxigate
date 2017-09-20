@@ -1,7 +1,7 @@
 #ifndef OPTIONWIDGETS_H
 #define OPTIONWIDGETS_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class ConfigOption;
 class ConfigString;

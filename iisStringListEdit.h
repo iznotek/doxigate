@@ -13,7 +13,7 @@
 #ifndef IISSTRINGLISTEDIT_H_
 #define IISSTRINGLISTEDIT_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 ////////////////////////////////////////////////////////////////////////////////
 

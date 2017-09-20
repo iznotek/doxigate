@@ -1,7 +1,5 @@
 TARGET = doxygate
-QT += core \
-    gui \
-    qt3support
+QT += core gui widgets
 HEADERS += setupmessagespage.h \
     options.h \
     iisEnvironment.h \

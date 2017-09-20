@@ -13,7 +13,7 @@
 #ifndef IISTREEMENU_H_
 #define IISTREEMENU_H_
 
-#include <QtGui>
+#include <QtWidgets>
 
 #define iisTreeMenuIdRole      1000
 #define iisTreeMenuCheckRole   1001

@@ -6,7 +6,7 @@
 
 #include "options.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 void Option::readFromWidget()
 {

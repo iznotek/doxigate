@@ -14,7 +14,7 @@ extern char **environ;
 
 #include <stdio.h>
 
-#include <Q3CString>
+//#include <Q3CString>
 #include <QtCore>
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
@@ -40,8 +40,8 @@ int  portable_system(const char *command,const char *args,bool commandHasConsole
 
   if (command==0) return 1;
 
-  Q3CString fullCmd=command;
-  fullCmd=fullCmd.stripWhiteSpace();
+  QString fullCmd=command;
+  fullCmd=fullCmd.trimmed();// stripWhiteSpace();
   if (fullCmd.at(0)!='"' && fullCmd.find(' ')!=-1)
   {
     // add quotes around command as it contains spaces and is not quoted already

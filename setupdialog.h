@@ -31,7 +31,7 @@
 #ifndef SETUPDIALOG_H
 #define SETUPDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "ui_setupdialog.h"
 
 class Option;

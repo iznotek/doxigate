@@ -1,7 +1,7 @@
 #ifndef MENUWIDGET_H
 #define MENUWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class SetupBasePage;
 class ConfigBool;
