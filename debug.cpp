@@ -18,8 +18,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include <Q3Dict>
-#include <Q3CString>
+#include <QHash>
+//#include <Q3CString>
 #include <QtCore>
 
 #include "debug.h"
@@ -51,9 +51,10 @@ static LabelMap s_labels[] =
 class LabelMapper
 {
   public:
-    LabelMapper() : m_map(17)
+    LabelMapper() : m_map()
     {
-      m_map.setAutoDelete(TRUE);
+      m_map.reserve(17);
+      //m_map.setAutoDelete(true);
       LabelMap *p = s_labels;
       while (p->name)
       {
@@ -61,13 +62,13 @@ class LabelMapper
         p++;
       }
     }
-    Debug::DebugMask *find(const char *s) const
+    Debug::DebugMask *find(const QString& s) const
     {
       if (s==0) return 0;
-      return m_map.find(s);
+      return m_map.find(s).value();
     }
   private:
-    Q3Dict<Debug::DebugMask> m_map;
+    QHash<QString,Debug::DebugMask*> m_map;
 };
 
 static LabelMapper g_labelMapper;
@@ -90,8 +91,8 @@ void Debug::print(DebugMask mask,int prio,const char *fmt,...)
 
 static int labelToEnumValue(const char *l)
 {
-  Q3CString label=l;
-  Debug::DebugMask *event = g_labelMapper.find(label.lower());
+  QString label=l;
+  Debug::DebugMask *event = g_labelMapper.find(label.toLower());
   if (event) return *event; else return 0;
 }
 

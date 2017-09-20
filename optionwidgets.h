@@ -23,7 +23,7 @@ public:
 	virtual void readValue();
 	virtual void storeValue();
 
-	inline ConfigOption* option() { return myOption; }
+	inline ConfigOptionPtr option() { return myOption; }
 	inline const QString title() { return myTitleLabel->text(); }
 
 	int titleTextWidth();

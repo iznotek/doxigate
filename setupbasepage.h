@@ -4,6 +4,7 @@
 #include <QtWidgets>
 
 class ConfigOption;
+class ConfigOptionPtr;
 class ConfigEnum;
 class ConfigString;
 class ConfigBool;
@@ -68,7 +69,7 @@ protected:
 	QBoxLayout *myMainLayout, *myLayout, *myGroupLayout;
 	QGroupBox *myGroup;
 
-	QMap<ConfigOption*, OptionBase*> myWidgetMap;
+    QMap<ConfigOptionPtr, OptionBase*> myWidgetMap;
 	QList<OptionBase*> myWidgets;
 
 	QList<QWidget*> myCol1, myCol2;

@@ -61,6 +61,33 @@ const int MaxRecentFiles = 15;
 #define DOX_BUILD_STRING "1.5.7.1"
 #define DOX_NEED_VERSION 0x01050701
 
+
+
+#if defined(Q_OS_MACX)
+#include <CoreFoundation/CFBundle.h>
+QString getResourcePath()
+{
+  // todo: use qApp->applicationDirPath()
+  QString result;
+  CFURLRef pluginRef  = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+  CFStringRef macPath = CFURLCopyFileSystemPath(pluginRef, kCFURLPOSIXPathStyle);
+  result = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
+  result+="/Contents/Resources/";
+  return result;
+}
+
+void setDotPath()
+{
+  Config_getString("DOT_PATH")=getResourcePath();
+}
+
+void setMscgenPath()
+{
+  Config_getString("MSCGEN_PATH")=getResourcePath();
+}
+
+#endif
+
 MainForm* MainForm::self = 0;
 
 MainForm::MainForm(QWidget *parent)
@@ -89,7 +116,7 @@ MainForm::MainForm(QWidget *parent)
     Config::instance()->init();
     Config::instance()->check();
 
-    Config_getBool("HAVE_DOT")=TRUE;
+    Config_getBool("HAVE_DOT")=true;
     #if defined(Q_OS_MACX)
       setDotPath();
       setMscgenPath();
@@ -125,7 +152,7 @@ MainForm::MainForm(QWidget *parent)
     connect(m_runProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(runComplete(int,QProcess::ExitStatus)));
     connect(m_runProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(runError(QProcess::ProcessError)));
     connect(m_runProcess,SIGNAL(started()), this, SLOT(runOk()));
-    m_running = FALSE;
+    m_running = false;
     m_timer = new QTimer;
     connect(m_timer,SIGNAL(timeout()),this,SLOT(timeout()));
 
@@ -167,7 +194,7 @@ void MainForm::doInit()
 
 void MainForm::doStyle()
 {
-    setStyle(new QPlastiqueStyle());
+    setStyle( QStyleFactory::create("macintosh") );
     setStyleSheet(stringFromResource(":/gui/style.qss"));
 
     iisStringListEdit::IconPickDir = QIcon(":/gui/icon16_dir.png");
@@ -345,7 +372,7 @@ void MainForm::newProject()
 
     showFirstPage();
 
-    statusBar()->message(tr("New configuration created"), MessageTimeout);
+    statusBar()->showMessage( tr("New configuration created"), MessageTimeout);
 }
 
 void MainForm::openProject()
@@ -410,7 +437,7 @@ void MainForm::saveProjectCopy()
 
 bool MainForm::loadConfigFromFile(const QString &name)
 {
-  if (!Config::instance()->parse(name))
+  if (!Config::instance()->parse( CCHARP(name) ))
   {
     QMessageBox::critical(this, tr("Warning"),
         tr("Could not open or read config file %1.").arg(name),
@@ -427,17 +454,17 @@ bool MainForm::loadConfigFromFile(const QString &name)
        )
     {
       Config_getString("DOT_PATH")=DOT_PATH;
-      //setConfigSaved(FALSE);
+      //setConfigSaved(false);
     }
     else
     {
-      //setConfigSaved(TRUE);
+      //setConfigSaved(true);
     }
 #else
-    //setConfigSaved(TRUE);
+    //setConfigSaved(true);
 #endif
     //addRecentFile(fn);
-    //m_workingDir->setText(QFileInfo(fn).dirPath(TRUE));
+    //m_workingDir->setText(QFileInfo(fn).dirPath(true));
 
     setProjectName(name);
 
@@ -452,15 +479,15 @@ bool MainForm::loadConfigFromFile(const QString &name)
     if (Config_getString("DOT_PATH").isEmpty())
     {
       setDotPath();
-      //setConfigSaved(FALSE);
+      //setConfigSaved(false);
     }
     if (Config_getString("MSCGEN_PATH").isEmpty())
     {
       setMscgenPath();
-      //setConfigSaved(FALSE);
+      //setConfigSaved(false);
     }
 #endif
-    statusBar()->message(tr("New configuration loaded"), MessageTimeout);
+    statusBar()->showMessage(tr("New configuration loaded"), MessageTimeout);
   }
 
   return true;
@@ -471,13 +498,13 @@ bool MainForm::saveConfigToFile(const QString &name)
     storeCurrentPage();
 
     QFile f(name);
-    if (f.open(IO_WriteOnly))
+    if (f.open(QFile::WriteOnly))
     {
       QTextStream t(&f);
-      Config::instance()->writeTemplate(t,TRUE,FALSE);
-//      setConfigSaved(TRUE);
+      Config::instance()->writeTemplate(t,true,false);
+//      setConfigSaved(true);
 //      addRecentFile(fn);
-      statusBar()->message(tr("Configuration saved"), MessageTimeout);
+      statusBar()->showMessage(tr("Configuration saved"), MessageTimeout);
       f.close();
       return true;
     }
@@ -508,31 +535,6 @@ void MainForm::addRecentFile(const QString &name)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-#if defined(Q_OS_MACX)
-QCString getResourcePath()
-{
-  // todo: use qApp->applicationDirPath()
-  QCString result;
-  CFURLRef pluginRef  = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-  CFStringRef macPath = CFURLCopyFileSystemPath(pluginRef, kCFURLPOSIXPathStyle);
-  result = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
-  result+="/Contents/Resources/";
-  return result;
-}
-
-void setDotPath()
-{
-  Config_getString("DOT_PATH")=getResourcePath();
-}
-
-void setMscgenPath()
-{
-  Config_getString("MSCGEN_PATH")=getResourcePath();
-}
-
-#endif
 
 void MainForm::runDoxygen()
 {
@@ -609,14 +611,14 @@ void MainForm::runComplete(int /*exitCode*/, QProcess::ExitStatus /*exitStatus*/
         emit runMessage(QString("Cancelled by user.\n"), MS_ERROR);
     }
 
-    statusBar()->message(tr("Build finished"), MessageTimeout);
+    statusBar()->showMessage(tr("Build finished"), MessageTimeout);
     setRunning(false);
 }
 
 void MainForm::runError(QProcess::ProcessError /*err*/)
 {
     emit runMessage(tr("Error while running build.\n"), MS_ERROR);
-    statusBar()->message(tr("Build error"), MessageTimeout);
+    statusBar()->showMessage(tr("Build error"), MessageTimeout);
 
     setRunning(false);
 }
@@ -630,7 +632,7 @@ void MainForm::runOk()
     timeout();
 
     emit runMessage(tr("Doxygen started OK...\n"), MS_OK);
-    statusBar()->message(tr("Build started"), MessageTimeout);
+    statusBar()->showMessage(tr("Build started"), MessageTimeout);
 }
 
 void MainForm::abortRun()
@@ -740,6 +742,10 @@ void MainForm::checkDoxygenVersion()
         int i = s.toUInt(&ok);
         if (ok)
             ver_int = (ver_int << 8) + i;
+    }
+    for(int i=ver_sl.size(); i<4; i++)
+    {
+        ver_int = (ver_int << 8);
     }
 
     //qDebug() << ver_int << DOX_NEED_VERSION;
@@ -857,7 +863,7 @@ void MainForm::replaceDefaultSettingsMsg()
 
 void MainForm::on_topWidget_about()
 {
-    if (ui.tbAbout->text().isEmpty())
+    if (ui.tbAbout->toPlainText().isEmpty())
     {
         QString s = stringFromResource(":/gui/about.htm");
 

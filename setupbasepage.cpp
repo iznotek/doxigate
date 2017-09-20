@@ -299,8 +299,8 @@ void SetupBasePage::addOptionWidget(OptionBase *ob)
 
 
 //	if (ob->option())
-//		connect(ob, SIGNAL(highlighted(ConfigOption*)),
-//			this, SIGNAL(optionHighlighted(ConfigOption*)));
+//		connect(ob, SIGNAL(highlighted(ConfigOptionPtr)),
+//			this, SIGNAL(optionHighlighted(ConfigOptionPtr)));
 //	else
 //		connect(ob, SIGNAL(highlighted(const QString&, const QString&)),
 //			this, SIGNAL(optionsHighlighted(const QString&, const QString&)));

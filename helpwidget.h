@@ -14,7 +14,7 @@ public:
 	~HelpWidget();
 
 protected slots:
-	void helpOption(ConfigOption*);
+	void helpOption(ConfigOptionPtr);
 	void help(const QString&, const QString&);
 
 private:

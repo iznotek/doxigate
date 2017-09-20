@@ -31,7 +31,7 @@
 #ifndef MAINFORM_H
 #define MAINFORM_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 #include "ui_mainform.h"
 
 class SetupBasePage;

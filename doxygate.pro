@@ -1,5 +1,8 @@
 TARGET = doxygate
 QT += core gui widgets
+
+DEFINES += LIBICONV_STATIC
+
 HEADERS += setupmessagespage.h \
     options.h \
     iisEnvironment.h \
@@ -33,6 +36,7 @@ HEADERS += setupmessagespage.h \
     menuwidget.h \
     helpwidget.h \
     setuphtmlstylepage.h
+
 SOURCES += setupmessagespage.cpp \
     options.cpp \
     iisEnvironment.cpp \
@@ -68,12 +72,20 @@ SOURCES += setupmessagespage.cpp \
     helpwidget.cpp \
     menuwidget.cpp \
     setuphtmlstylepage.cpp
+
 FORMS += setupdialog.ui \
     mainform.ui
-win32 { 
-    HEADERS += 3rdparty/icon_config.h
-    SOURCES += 3rdparty/localcharset.c \
-        3rdparty/relocatable.c \
+
+CONFIG += staticlib
+LIBS += -liconv -lcharset
+
+#PRE_TARGETDEPS += /usr/local/opt/libiconv/lib/libiconv.a /usr/local/opt/libiconv/lib/libcharset.a
+#INCLUDEPATH += -I/usr/local/opt/libiconv/include
+
+win32 {
+    HEADERS += 3rdParty/icon_config.h
+    SOURCES += 3rdParty/localcharset.c \
+        3rdParty/relocatable.c \
         3rdParty/iconv.c
     RC_FILE += gui/res.rc
     win32-msvc:CONFIG += MSVC
@@ -84,13 +96,16 @@ win32 {
     win32-msvc2008:CONFIG += MSVC
     MSVC:LIBS += shell32.lib
 }
+
 MOC_DIR = .moc
 UI_DIR = .ui
 OBJECTS_DIR = .obj
-INCLUDEPATH += . \
-    3rdParty
+
+INCLUDEPATH += .
+
 LIBPATH += .
-LIBS += 
+LIBS += -framework Cocoa
 RESOURCES = mainform.qrc
+
 target.path = /usr/local/bin
 INSTALL = target

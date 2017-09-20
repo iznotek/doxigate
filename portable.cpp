@@ -42,7 +42,7 @@ int  portable_system(const char *command,const char *args,bool commandHasConsole
 
   QString fullCmd=command;
   fullCmd=fullCmd.trimmed();// stripWhiteSpace();
-  if (fullCmd.at(0)!='"' && fullCmd.find(' ')!=-1)
+  if (fullCmd.at(0)!='"' && fullCmd.contains(' '))
   {
     // add quotes around command as it contains spaces and is not quoted already
     fullCmd="\""+fullCmd+"\"";
@@ -96,7 +96,7 @@ int  portable_system(const char *command,const char *args,bool commandHasConsole
     const char * argv[4];
     argv[0] = "sh";
     argv[1] = "-c";
-    argv[2] = fullCmd.data();
+    argv[2] = fullCmd.toStdString().data();
     argv[3] = 0;
     execve("/bin/sh",(char * const *)argv,environ);
     exit(127);
@@ -357,9 +357,9 @@ const char *portable_commandExtension()
 bool portable_fileSystemIsCaseSensitive()
 {
 #if defined(_WIN32) || defined(macintosh) || defined(__MACOSX__) || defined(__APPLE__)
-  return FALSE;
+  return false;
 #else
-  return TRUE;
+  return true;
 #endif
 }
 
