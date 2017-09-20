@@ -1,0 +1,548 @@
+<ui version="4.0" >
+ <class>SetupDialogClass</class>
+ <widget class="QDialog" name="SetupDialogClass" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>527</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>Common Settings</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_5" >
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabTools" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>404</width>
+        <height>468</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Tools</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <item>
+          <widget class="QCheckBox" name="cbDefToolsNew" >
+           <property name="text" >
+            <string>Use as defaults for new projects</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbDefToolsOpen" >
+           <property name="text" >
+            <string>Use as defaults for opened projects</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Doxygen Tools</string>
+         </property>
+         <layout class="QGridLayout" name="_4" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Doxygen</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="iisLineEditFile" name="doxygenDir" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_6" >
+         <property name="title" >
+          <string>HTML and CHM Tools</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>HtmlHelp Compiler</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="iisLineEditFile" name="hhcDir" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_8" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Qt Help Generator</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="iisLineEditFile" name="qhpDir" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>Diagram Tools</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="1" >
+           <widget class="iisLineEditDir" name="mscgenDir" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>Dot</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="iisLineEditDir" name="dotDir" />
+          </item>
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Mscgen</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3" >
+         <property name="title" >
+          <string>Interpreters</string>
+         </property>
+         <layout class="QGridLayout" name="_3" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_4" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Perl</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="iisLineEditFile" name="perlDir" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_4" >
+         <property name="title" >
+          <string>LaTeX Tools</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_5" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Latex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="iisLineEditFile" name="latexDir" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>MakeIndex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="iisLineEditFile" name="makeindexDir" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType" >
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>12</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <widget class="QPushButton" name="bDiscardTools" >
+           <property name="text" >
+            <string>Discard</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bRestoreTools" >
+           <property name="text" >
+            <string>Restore Defaults</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bApplyTools" >
+           <property name="text" >
+            <string>Apply Now</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabMessages" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>404</width>
+        <height>468</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Messages</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3" >
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3" >
+         <item>
+          <widget class="QCheckBox" name="cbDefMsgNew" >
+           <property name="text" >
+            <string>Use as defaults for new projects</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbDefMsgOpen" >
+           <property name="text" >
+            <string>Use as defaults for opened projects</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_7" >
+         <property name="title" >
+          <string>Doxygen output</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout" >
+          <item>
+           <widget class="QCheckBox" name="cbQuietMode" >
+            <property name="text" >
+             <string>Disable output messages</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_5" >
+            <item row="0" column="0" colspan="2" >
+             <widget class="QCheckBox" name="cbWarnings" >
+              <property name="text" >
+               <string>Enable warning  messages</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="QCheckBox" name="cbWarnUndocMember" >
+              <property name="text" >
+               <string>Warn on undocumented members</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QCheckBox" name="cbWarnErrors" >
+              <property name="text" >
+               <string>Warn on potential errors</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" >
+             <widget class="QCheckBox" name="cbWarnUndocParam" >
+              <property name="text" >
+               <string>Warn on undocumented parameters</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" >
+             <widget class="QLabel" name="lFormat" >
+              <property name="text" >
+               <string>Format</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" >
+             <widget class="QLineEdit" name="leWarnFormat" />
+            </item>
+            <item row="5" column="0" >
+             <widget class="QLabel" name="lLogFile" >
+              <property name="text" >
+               <string>Log to file</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1" >
+             <widget class="iisLineEditFile" name="leWarnLogFile" />
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType" >
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" >
+         <item>
+          <widget class="QPushButton" name="bDiscardMsg" >
+           <property name="text" >
+            <string>Discard</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bRestoreMsg" >
+           <property name="text" >
+            <string>Restore Defaults</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bApplyMsg" >
+           <property name="text" >
+            <string>Apply Now</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_4" >
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox" >
+       <property name="locale" >
+        <locale country="UnitedStates" language="English" />
+       </property>
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="standardButtons" >
+        <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Discard|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <customwidgets>
+  <customwidget>
+   <class>iisLineEditFile</class>
+   <extends>QLineEdit</extends>
+   <header>iisLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>iisLineEditDir</class>
+   <extends>QLineEdit</extends>
+   <header>iisLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>cbDefToolsNew</tabstop>
+  <tabstop>cbDefToolsOpen</tabstop>
+  <tabstop>doxygenDir</tabstop>
+  <tabstop>hhcDir</tabstop>
+  <tabstop>qhpDir</tabstop>
+  <tabstop>mscgenDir</tabstop>
+  <tabstop>dotDir</tabstop>
+  <tabstop>perlDir</tabstop>
+  <tabstop>latexDir</tabstop>
+  <tabstop>makeindexDir</tabstop>
+  <tabstop>bDiscardTools</tabstop>
+  <tabstop>bRestoreTools</tabstop>
+  <tabstop>bApplyTools</tabstop>
+  <tabstop>cbDefMsgNew</tabstop>
+  <tabstop>cbDefMsgOpen</tabstop>
+  <tabstop>cbQuietMode</tabstop>
+  <tabstop>cbWarnings</tabstop>
+  <tabstop>cbWarnUndocMember</tabstop>
+  <tabstop>cbWarnErrors</tabstop>
+  <tabstop>cbWarnUndocParam</tabstop>
+  <tabstop>leWarnFormat</tabstop>
+  <tabstop>leWarnLogFile</tabstop>
+  <tabstop>bDiscardMsg</tabstop>
+  <tabstop>bRestoreMsg</tabstop>
+  <tabstop>bApplyMsg</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SetupDialogClass</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>446</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>24</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SetupDialogClass</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>480</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>191</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
