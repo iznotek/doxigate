@@ -2,13 +2,16 @@
 #define OPTIONWIDGETS_H
 
 #include <QtWidgets>
+#include <config.h>
 
-class ConfigOption;
-class ConfigString;
-class ConfigEnum;
-class ConfigBool;
-class ConfigList;
-class ConfigInt;
+//class ConfigOption;
+//typedef QSharedPointer<ConfigOption> ConfigOptionPtr;
+////class ConfigOptionPtr;
+//class ConfigString;
+//class ConfigEnum;
+//class ConfigBool;
+//class ConfigList;
+//class ConfigInt;
 
 /////////////////////////////////////////////
 
@@ -17,7 +20,7 @@ class OptionBase : public QWidget
 	Q_OBJECT
 
 public:
-	OptionBase(const QString &title, ConfigOption *option, QWidget *parent);
+    OptionBase(const QString &title, ConfigOptionPtr option, QWidget *parent);
 	virtual ~OptionBase();
 
 	virtual void readValue();
@@ -39,8 +42,8 @@ protected:
 
 	virtual bool eventFilter(QObject *obj, QEvent *event);
 
-	ConfigOption *myOption;
-	QHBoxLayout *myLayout;
+    ConfigOptionPtr myOption;
+    QHBoxLayout *myLayout;
 	QLabel *myHelp;
 	QLabel *myTitleLabel;
 };
@@ -71,7 +74,7 @@ class OptionString : public OptionBase
 	Q_OBJECT
 
 public:
-	OptionString(const QString &title, ConfigString *option, QWidget *parent);
+    OptionString(const QString &title, ConfigStringPtr option, QWidget *parent);
 	virtual ~OptionString();
 
 	virtual void readValue();
@@ -92,13 +95,13 @@ class OptionEnum : public OptionBase
 	Q_OBJECT
 
 public:
-	OptionEnum(const QString &title, ConfigEnum *option, QWidget *parent);
+    OptionEnum(const QString &title, ConfigEnumPtr option, QWidget *parent);
 	virtual ~OptionEnum();
 
     virtual void readValue();
     virtual void storeValue();
 
-	static void initCombo(QComboBox *combo, ConfigEnum *option);
+    static void initCombo(QComboBox *combo, ConfigEnumPtr option);
 
 protected:
     QComboBox *myCombo;
@@ -111,7 +114,7 @@ class OptionBool : public OptionBase
 	Q_OBJECT
 
 public:
-	OptionBool(const QString &title, ConfigBool *option, QWidget *parent);
+    OptionBool(const QString &title, ConfigBoolPtr option, QWidget *parent);
 	virtual ~OptionBool();
 
 	virtual void readValue();
@@ -120,7 +123,7 @@ public:
 	void setCheckState(Qt::CheckState state);
 
 signals:
-    void checked(ConfigBool*, Qt::CheckState state);
+    void checked(ConfigBoolPtr, Qt::CheckState state);
 
 private slots:
     void onChecked(int);
@@ -136,7 +139,7 @@ class OptionEncoding : public OptionBase
     Q_OBJECT
 
 public:
-    OptionEncoding(const QString &title, ConfigString *option, QWidget *parent);
+    OptionEncoding(const QString &title, ConfigStringPtr option, QWidget *parent);
     virtual ~OptionEncoding();
 
     virtual void readValue();
@@ -153,7 +156,7 @@ class OptionList : public OptionBase
     Q_OBJECT
 
 public:
-    OptionList(const QString &title, ConfigList *option, QWidget *parent);
+    OptionList(const QString &title, ConfigListPtr option, QWidget *parent);
     virtual ~OptionList();
 
     virtual void readValue();
@@ -174,7 +177,7 @@ class OptionInt : public OptionBase
     Q_OBJECT
 
 public:
-    OptionInt(const QString &title, ConfigInt *option, QWidget *parent);
+    OptionInt(const QString &title, ConfigIntPtr option, QWidget *parent);
     virtual ~OptionInt();
 
     virtual void readValue();

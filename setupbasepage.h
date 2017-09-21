@@ -2,13 +2,14 @@
 #define SETUPBASEPAGE_H
 
 #include <QtWidgets>
+#include "config.h"
 
-class ConfigOption;
-class ConfigOptionPtr;
-class ConfigEnum;
-class ConfigString;
-class ConfigBool;
-class ConfigInt;
+//class ConfigOption;
+//class ConfigOptionPtr;
+//class ConfigEnum;
+//class ConfigString;
+//class ConfigBool;
+//class ConfigInt;
 
 class OptionBase;
 
@@ -18,10 +19,10 @@ extern void setStringValue(const char *name, const QString &value);
 extern void setBoolValue(const char *name, bool value);
 extern void setIntValue(const char *name, int value);
 
-extern ConfigEnum* getEnum(const char *name);
-extern ConfigString* getString(const char *name);
-extern ConfigBool* getBool(const char *name);
-extern ConfigInt* getInt(const char *name);
+extern ConfigEnumPtr getEnum(const char *name);
+extern ConfigStringPtr getString(const char *name);
+extern ConfigBoolPtr getBool(const char *name);
+extern ConfigIntPtr getInt(const char *name);
 
 
 class SetupBasePage : public QFrame
@@ -51,14 +52,14 @@ signals:
 	void optionHighlighted(OptionBase*);
 	void optionsHighlighted(const QString&, const QString&);
 
-	void optionChecked(ConfigBool*, Qt::CheckState check);
+    void optionChecked(ConfigBoolPtr, Qt::CheckState check);
 
 protected slots:
     void onOptionHighlighted(OptionBase*);
     void onOptionHighlighted(const QString&, const QString&);
     void onOptionOfflighted(OptionBase*);
 
-    void onOptionChecked(ConfigBool*, Qt::CheckState check);
+    void onOptionChecked(ConfigBoolPtr, Qt::CheckState check);
 
     void hintTimeout();
 

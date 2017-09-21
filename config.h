@@ -106,6 +106,7 @@ class ConfigInfo : public ConfigOption
     }
     void substEnvVars() {}
 };
+typedef QSharedPointer<ConfigInfo> ConfigInfoPtr;
 
 /*! \brief Option of the list type.
  *
@@ -159,6 +160,7 @@ class ConfigList : public ConfigOption
     QStringList m_value;
     WidgetType m_widgetType;
 };
+typedef QSharedPointer<ConfigList> ConfigListPtr;
 
 /*! \brief Option of the enum type.
  *
@@ -213,6 +215,7 @@ class ConfigEnum : public ConfigOption
     QString m_value;
     QString m_defValue;
 };
+typedef QSharedPointer<ConfigEnum> ConfigEnumPtr;
 
 /*! \brief Option of the string type.
  *
@@ -259,6 +262,7 @@ class ConfigString : public ConfigOption
     QString m_defValue;
     WidgetType m_widgetType;
 };
+typedef QSharedPointer<ConfigString> ConfigStringPtr;
 
 /*! \brief Option of the integer type.
  *
@@ -309,6 +313,7 @@ class ConfigInt : public ConfigOption
     int m_maxVal;
     QString m_valueString;
 };
+typedef QSharedPointer<ConfigInt> ConfigIntPtr;
 
 /*! \brief Option of the boolean type.
  *
@@ -354,6 +359,7 @@ class ConfigBool : public ConfigOption
     bool m_defValue;
     QString m_valueString;
 };
+typedef QSharedPointer<ConfigBool> ConfigBoolPtr;
 
 /*! \brief Section marker for obsolete options
  *
@@ -365,6 +371,7 @@ class ConfigObsolete : public ConfigOption
     void writeTemplate(QTextStream &,bool,bool) {}
     void substEnvVars() {}
 };
+typedef QSharedPointer<ConfigObsolete> ConfigObsoletePtr;
 
 
 // some convenience macros
@@ -469,9 +476,9 @@ class Config
     /*! Starts a new configuration section with \a name and description \a doc.
      *  \returns An object representing the option.
      */
-    ConfigInfo   *addInfo(const char *name,const char *doc)
+    ConfigInfoPtr addInfo(const char *name,const char *doc)
     {
-      ConfigInfo *result = new ConfigInfo(name,doc);
+      ConfigInfoPtr result(new ConfigInfo(name,doc));
       m_options->append(result);
       return result;
     }
@@ -479,10 +486,10 @@ class Config
     /*! Adds a new string option with \a name and documentation \a doc.
      *  \returns An object representing the option.
      */
-    ConfigString *addString(const char *name,
+    ConfigStringPtr addString(const char *name,
                             const char *doc)
     {
-      ConfigString *result = new ConfigString(name,doc);
+      ConfigStringPtr result(new ConfigString(name,doc));
       m_options->append(result);
       m_dict->insert(name,result);
       return result;
@@ -492,11 +499,11 @@ class Config
      *  and initial value \a defVal.
      *  \returns An object representing the option.
      */
-    ConfigEnum   *addEnum(const char *name,
+    ConfigEnumPtr   addEnum(const char *name,
                           const char *doc,
                           const char *defVal)
     {
-      ConfigEnum *result = new ConfigEnum(name,doc,defVal);
+      ConfigEnumPtr result(new ConfigEnum(name,doc,defVal));
       m_options->append(result);
       m_dict->insert(name,result);
       return result;
@@ -505,10 +512,10 @@ class Config
     /*! Adds a new string option with \a name and documentation \a doc.
      *  \returns An object representing the option.
      */
-    ConfigList   *addList(const char *name,
+    ConfigListPtr   addList(const char *name,
                           const char *doc)
     {
-      ConfigList *result = new ConfigList(name,doc);
+      ConfigListPtr result(new ConfigList(name,doc));
       m_options->append(result);
       m_dict->insert(name,result);
       return result;
@@ -519,11 +526,11 @@ class Config
      *  default value of \a defVal.
      *  \returns An object representing the option.
      */
-    ConfigInt    *addInt(const char *name,
+    ConfigIntPtr    addInt(const char *name,
                          const char *doc,
                          int minVal,int maxVal,int defVal)
     {
-      ConfigInt *result = new ConfigInt(name,doc,minVal,maxVal,defVal);
+      ConfigIntPtr result(new ConfigInt(name,doc,minVal,maxVal,defVal));
       m_options->append(result);
       m_dict->insert(name,result);
       return result;
@@ -533,19 +540,19 @@ class Config
      *  The boolean has a default value of \a defVal.
      *  \returns An object representing the option.
      */
-    ConfigBool   *addBool(const char *name,
+    ConfigBoolPtr   addBool(const char *name,
                           const char *doc,
                           bool defVal)
     {
-      ConfigBool *result = new ConfigBool(name,doc,defVal);
+      ConfigBoolPtr result(new ConfigBool(name,doc,defVal));
       m_options->append(result);
       m_dict->insert(name,result);
       return result;
     }
     /*! Adds an option that has become obsolete. */
-    ConfigOption *addObsolete(const char *name)
+    ConfigOptionPtr addObsolete(const char *name)
     {
-      ConfigObsolete *option = new ConfigObsolete(ConfigOption::O_Obsolete);
+      ConfigObsoletePtr option(new ConfigObsolete(ConfigOption::O_Obsolete));
       m_dict->insert(name,option);
       m_obsolete->append(option);
       return option;

@@ -25,7 +25,7 @@ HelpWidget::~HelpWidget()
 
 }
 
-void HelpWidget::helpOption(ConfigOption *option)
+void HelpWidget::helpOption(ConfigOptionPtr option)
 {
 	help(option->nameString(), option->docString());
 }

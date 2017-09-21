@@ -782,8 +782,8 @@ void ConfigBool::convertStrToVal()
 
 QString &Config::getString(const char *fileName,int num,const char *name) const
 {
-  ConfigOption *opt = m_dict->find(name).value();
-  if (opt==0)
+  ConfigOptionPtr opt = m_dict->find(name).value();
+  if (opt.isNull())
   {
     config_err("%s<%d>: Internal error: Requested unknown option %s!\n",fileName,num,name);
     exit(1);
@@ -793,13 +793,13 @@ QString &Config::getString(const char *fileName,int num,const char *name) const
     config_err("%s<%d>: Internal error: Requested option %s not of string type!\n",fileName,num,name);
     exit(1);
   }
-  return *((ConfigString *)opt)->valueRef();
+  return *opt.staticCast<ConfigString>()->valueRef();
 }
 
 QStringList &Config::getList(const char *fileName,int num,const char *name) const
 {
-  ConfigOption *opt = m_dict->find(name).value();
-  if (opt==0)
+  ConfigOptionPtr opt = m_dict->find(name).value();
+  if (opt.isNull())
   {
     config_err("%s<%d>: Internal error: Requested unknown option %s!\n",fileName,num,name);
     exit(1);
@@ -809,13 +809,13 @@ QStringList &Config::getList(const char *fileName,int num,const char *name) cons
     config_err("%d<%d>: Internal error: Requested option %s not of list type!\n",fileName,num,name);
     exit(1);
   }
-  return *((ConfigList *)opt)->valueRef();
+  return *opt.staticCast<ConfigList>()->valueRef(); //*((ConfigList *)opt)->valueRef();
 }
 
 QString &Config::getEnum(const char *fileName,int num,const char *name) const
 {
-  ConfigOption *opt = m_dict->find(name).value();
-  if (opt==0)
+  ConfigOptionPtr opt = m_dict->find(name).value();
+  if (opt.isNull())
   {
     config_err("%s<%d>: Internal error: Requested unknown option %s!\n",fileName,num,name);
     exit(1);
@@ -825,13 +825,13 @@ QString &Config::getEnum(const char *fileName,int num,const char *name) const
     config_err("%s<%d>: Internal error: Requested option %s not of enum type!\n",fileName,num,name);
     exit(1);
   }
-  return *((ConfigEnum *)opt)->valueRef();
+  return *opt.staticCast<ConfigEnum>()->valueRef(); //*((ConfigEnum *)opt)->valueRef();
 }
 
 int &Config::getInt(const char *fileName,int num,const char *name) const
 {
-  ConfigOption *opt = m_dict->find(name).value();
-  if (opt==0)
+  ConfigOptionPtr opt = m_dict->find(name).value();
+  if (opt.isNull())
   {
     config_err("%s<%d>: Internal error: Requested unknown option %s!\n",fileName,num,name);
     exit(1);
@@ -841,13 +841,13 @@ int &Config::getInt(const char *fileName,int num,const char *name) const
     config_err("%s<%d>: Internal error: Requested option %s not of integer type!\n",fileName,num,name);
     exit(1);
   }
-  return *((ConfigInt *)opt)->valueRef();
+  return *opt.staticCast<ConfigInt>()->valueRef();; //*((ConfigInt *)opt)->valueRef();
 }
 
 bool &Config::getBool(const char *fileName,int num,const char *name) const
 {
-  ConfigOption *opt = m_dict->find(name).value();
-  if (opt==0)
+  ConfigOptionPtr opt = m_dict->find(name).value();
+  if (opt.isNull())
   {
     config_err("%s<%d>: Internal error: Requested unknown option %s!\n",fileName,num,name);
     exit(1);
@@ -857,7 +857,7 @@ bool &Config::getBool(const char *fileName,int num,const char *name) const
     config_err("%s<%d>: Internal error: Requested option %s not of integer type!\n",fileName,num,name);
     exit(1);
   }
-  return *((ConfigBool *)opt)->valueRef();
+  return *opt.staticCast<ConfigBool>()->valueRef(); //*((ConfigBool *)opt)->valueRef();
 }
 
 /* -----------------------------------------------------------------
@@ -968,7 +968,7 @@ static QString configStringRecode(
 
 static void checkEncoding()
 {
-  ConfigString *option = (ConfigString*)config->get("DOXYFILE_ENCODING");
+  ConfigStringPtr option = config->get("DOXYFILE_ENCODING").staticCast<ConfigString>();
   encoding = *option->valueRef();
 }
 
@@ -1344,8 +1344,8 @@ YY_RULE_SETUP
 //#line 504 "config.l"
 { QString cmd=configYYtext;
                                            cmd=cmd.left(cmd.length()-1).trimmed();// stripWhiteSpace();
-					   ConfigOption *option = config->get(cmd);
-					   if (option==0) // oops not known
+                       ConfigOptionPtr option = config->get(cmd);
+                       if (option.isNull()) // oops not known
 					   {
 					     config_err("Warning: ignoring unsupported tag `%s' at line %d, file %s\n",
 						 configYYtext,yyLineNr,yyFileName.data());
@@ -1361,28 +1361,28 @@ YY_RULE_SETUP
 					         BEGIN(SkipInvalid);
 						 break;
 					       case ConfigOption::O_List:
-						 l = ((ConfigList *)option)->valueRef();
+                             l = option.staticCast<ConfigList>()->valueRef();
 					         l->clear();
 						 elemStr="";
 					         BEGIN(GetStrList);
 					         break;
 					       case ConfigOption::O_Enum:
-						 s = ((ConfigEnum *)option)->valueRef();
+                             s = option.staticCast<ConfigEnum>()->valueRef();
 					         s->resize(0);
 					         BEGIN(GetString);
 					         break;
 					       case ConfigOption::O_String:
-						 s = ((ConfigString *)option)->valueRef();
+                             s = option.staticCast<ConfigString>()->valueRef();
 					         s->resize(0);
 					         BEGIN(GetString);
 					         break;
 					       case ConfigOption::O_Int:
-						 s = ((ConfigInt *)option)->valueStringRef();
+                             s = option.staticCast<ConfigInt>()->valueStringRef();
 					         s->resize(0);
 					         BEGIN(GetString);
 					         break;
 					       case ConfigOption::O_Bool:
-						 s = ((ConfigBool *)option)->valueStringRef();
+                             s = option.staticCast<ConfigBool>()->valueStringRef();
 					         s->resize(0);
 					         BEGIN(GetString);
 						 break;
@@ -1401,8 +1401,8 @@ YY_RULE_SETUP
 //#line 557 "config.l"
 { QString cmd=configYYtext;
                                           cmd=cmd.left(cmd.length()-2).trimmed();// stripWhiteSpace();
-					  ConfigOption *option = config->get(cmd);
-					  if (option==0) // oops not known
+                      ConfigOptionPtr option = config->get(cmd);
+                      if (option.isNull()) // oops not known
 					  {
 					    config_err("Warning: ignoring unsupported tag `%s' at line %d, file %s\n",
 						configYYtext,yyLineNr,yyFileName.data());
@@ -1417,7 +1417,8 @@ YY_RULE_SETUP
 					        BEGIN(SkipInvalid);
 						break;
 					      case ConfigOption::O_List:
-					        l = ((ConfigList *)option)->valueRef();
+                            l = option.staticCast<ConfigList>()->valueRef();
+
 						elemStr="";
 					        BEGIN(GetStrList);
 					        break;
@@ -2657,8 +2658,8 @@ void Config::writeTemplate(QTextStream &t,bool sl,bool upd)
   int cnt=0;
   if( m_options->size() )
   {
-      ConfigOption *option = m_options->at(cnt++);
-      while (option)
+      ConfigOptionPtr option = m_options->at(cnt++);
+      while (!option.isNull())
       {
         option->writeTemplate(t,sl,upd);
         option = cnt < m_options->size() ? m_options->at(cnt++) : NULL;
@@ -2669,7 +2670,7 @@ void Config::writeTemplate(QTextStream &t,bool sl,bool upd)
 void Config::convertStrToVal()
 {
   //ConfigOption *option = m_options->first();
-  QListIterator<ConfigOption *> option(*m_options);
+  QListIterator<ConfigOptionPtr> option(*m_options);
   while (option.hasNext())
   {
     option.next()->convertStrToVal();
@@ -2822,7 +2823,7 @@ void ConfigEnum::substEnvVars()
 
 void Config::substituteEnvironmentVars()
 {
-  QListIterator<ConfigOption *> option(*m_options);
+  QListIterator<ConfigOptionPtr> option(*m_options);
   while (option.hasNext())
   {
     option.next()->substEnvVars();
@@ -3314,11 +3315,11 @@ void Config::create()
   if (m_initialized) return;
   m_initialized = true;
 
-  ConfigString *cs;
-  ConfigEnum   *ce;
-  ConfigList   *cl;
-  ConfigInt    *ci;
-  ConfigBool   *cb;
+  ConfigStringPtr cs;
+  ConfigEnumPtr   ce;
+  ConfigListPtr   cl;
+  ConfigIntPtr    ci;
+  ConfigBoolPtr   cb;
 
   // option definitions
   //-----------------------------------------------------------------------------------------------
@@ -5261,12 +5262,15 @@ static QString configFileToString(const char *name)
       return "";
     }
     f.setFileName(name);
-    fileOpened=f.open(QFile::ReadOnly);
+    fileOpened=f.open(QFile::ReadOnly | QFile::Text);
     if (fileOpened)
     {
       int fsize=f.size();
-      QString contents(fsize+2);
-      f.read(CHARP(contents),fsize);
+      QString contents;
+      contents.reserve(fsize+2);
+      QTextStream in(&f);
+      contents = in.readAll();
+     // f.read(contents.constData(),fsize);
       f.close();
       if (fsize==0 || contents[fsize-1]=='\n')
 	contents[fsize]='\0';

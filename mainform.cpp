@@ -284,11 +284,11 @@ void MainForm::showSetupPage(SetupBasePage *sb, bool storePrevious)
 
     ui.setupWidget->addWidget(sb);
 
-    connect(ui.menuWidget, SIGNAL(checked(ConfigBool*, Qt::CheckState)),
-         sb, SLOT(onOptionChecked(ConfigBool*, Qt::CheckState)));
+    connect(ui.menuWidget, SIGNAL(checked(ConfigBoolPtr, Qt::CheckState)),
+         sb, SLOT(onOptionChecked(ConfigBoolPtr, Qt::CheckState)));
 
-    connect(sb, SIGNAL(optionChecked(ConfigBool*, Qt::CheckState)),
-            ui.menuWidget, SLOT(onOptionChecked(ConfigBool*, Qt::CheckState)));
+    connect(sb, SIGNAL(optionChecked(ConfigBoolPtr, Qt::CheckState)),
+            ui.menuWidget, SLOT(onOptionChecked(ConfigBoolPtr, Qt::CheckState)));
 
     myCurrentSetupPage = sb;
 
@@ -555,7 +555,7 @@ void MainForm::runDoxygen()
         QStringList args;
 
 #if defined(Q_OS_MACX)
-        doxygenPath = getResourcePath();
+        //doxygenPath = getResourcePath();
 #else
         // TODO: get the right value if not in the search path
 #endif

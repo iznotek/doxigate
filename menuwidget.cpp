@@ -177,23 +177,23 @@ void MenuWidget::setActivePage(int id)
 
 void MenuWidget::bindCheckBox(QTreeWidgetItem *item, char *config)
 {
-    ConfigBool *cb = (ConfigBool*) Config::instance()->get(config);
+    ConfigBoolPtr cb = Config::instance()->get(config).staticCast<ConfigBool>();
     myCheckMap[item] = cb;
 }
 
 void MenuWidget::reload()
 {
-    QMap<QTreeWidgetItem*, ConfigBool*>::iterator it, it_end = myCheckMap.end();
+    QMap<QTreeWidgetItem*, ConfigBoolPtr>::iterator it, it_end = myCheckMap.end();
     for (it = myCheckMap.begin(); it != it_end; it++) {
         QTreeWidgetItem *item = it.key();
-        ConfigBool *cb = it.value();
+        ConfigBoolPtr cb = it.value();
         item->setCheckState(0, *(cb->valueRef()) ? Qt::Checked : Qt::Unchecked);
     }
 }
 
 void MenuWidget::onChecked(QTreeWidgetItem *item, Qt::CheckState check)
 {
-    ConfigBool *cb = myCheckMap[item];
+    ConfigBoolPtr cb = myCheckMap[item];
     if (!cb)
         return;
 
@@ -202,7 +202,7 @@ void MenuWidget::onChecked(QTreeWidgetItem *item, Qt::CheckState check)
     emit checked(cb, check);
 }
 
-void MenuWidget::onOptionChecked(ConfigBool *cb, Qt::CheckState check)
+void MenuWidget::onOptionChecked(ConfigBoolPtr cb, Qt::CheckState check)
 {
     QTreeWidgetItem *item = myCheckMap.key(cb);
     if (item) {

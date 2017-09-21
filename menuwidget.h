@@ -2,9 +2,9 @@
 #define MENUWIDGET_H
 
 #include <QtWidgets>
+#include "config.h"
 
 class SetupBasePage;
-class ConfigBool;
 class iisTreeMenu;
 
 enum PageID {
@@ -42,10 +42,10 @@ public:
 signals:
     void setup(int id);
 
-    void checked(ConfigBool*, Qt::CheckState check);
+    void checked(ConfigBoolPtr, Qt::CheckState check);
 
 public slots:
-    void onOptionChecked(ConfigBool*, Qt::CheckState check);
+    void onOptionChecked(ConfigBoolPtr, Qt::CheckState check);
 
 protected slots:
     void onChecked(QTreeWidgetItem *item, Qt::CheckState check);
@@ -53,7 +53,7 @@ protected slots:
 protected:
     void bindCheckBox(QTreeWidgetItem *item, char *config);
 
-    QMap<QTreeWidgetItem*, ConfigBool*> myCheckMap;
+    QMap<QTreeWidgetItem*, ConfigBoolPtr> myCheckMap;
 
     iisTreeMenu *treeMenu;
 };

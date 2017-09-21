@@ -2,8 +2,9 @@
 #define HELPWIDGET_H
 
 #include <QtWidgets>
+#include "config.h"
 
-class ConfigOption;
+//class ConfigOption;
 
 class HelpWidget : public QFrame
 {

@@ -4,7 +4,7 @@
 
 const int FixedSize = 24;
 
-OptionBase::OptionBase(const QString &title, ConfigOption *option, QWidget *parent)
+OptionBase::OptionBase(const QString &title, ConfigOptionPtr option, QWidget *parent)
 	: QWidget(parent),
 	myOption(option)
 {
@@ -95,7 +95,7 @@ void OptionCustom::doEnterEvent()
 
 /////////////////////////////////////////////
 
-OptionString::OptionString(const QString &title, ConfigString *option, QWidget *parent)
+OptionString::OptionString(const QString &title, ConfigStringPtr option, QWidget *parent)
 	: OptionBase(title, option, parent)
 {
 	myLineEdit = new QLineEdit(this);
@@ -163,17 +163,17 @@ void OptionString::pickFile()
 
 void OptionString::readValue()
 {
-	myLineEdit->setText(((ConfigString*)myOption)->value());
+    myLineEdit->setText(myOption.staticCast<ConfigString>()->value());
 }
 
 void OptionString::storeValue()
 {
-	((ConfigString*)myOption)->setValue(myLineEdit->text());
+    myOption.staticCast<ConfigString>()->setValue(myLineEdit->text());
 }
 
 /////////////////////////////////////////////
 
-OptionEnum::OptionEnum(const QString &title, ConfigEnum *option, QWidget *parent)
+OptionEnum::OptionEnum(const QString &title, ConfigEnumPtr option, QWidget *parent)
 	: OptionBase(title, option, parent)
 {
     myCombo = new QComboBox(this);
@@ -193,17 +193,17 @@ OptionEnum::~OptionEnum()
 
 void OptionEnum::readValue()
 {
-    int i = myCombo->findText(((ConfigEnum*)myOption)->value());
+    int i = myCombo->findText(myOption.staticCast<ConfigEnum>()->value());
     if (i >= 0)
         myCombo->setCurrentIndex(i);
 }
 
 void OptionEnum::storeValue()
 {
-    ((ConfigEnum*)myOption)->setValue(myCombo->currentText());
+    myOption.staticCast<ConfigEnum>()->setValue(myCombo->currentText());
 }
 
-void OptionEnum::initCombo(QComboBox *combo, ConfigEnum *option)
+void OptionEnum::initCombo(QComboBox *combo, ConfigEnumPtr option)
 {
 	combo->addItems(option->values());
 	int i = combo->findText(option->defaultValue());
@@ -213,7 +213,7 @@ void OptionEnum::initCombo(QComboBox *combo, ConfigEnum *option)
 
 /////////////////////////////////////////////
 
-OptionBool::OptionBool(const QString &title, ConfigBool *option, QWidget *parent)
+OptionBool::OptionBool(const QString &title, ConfigBoolPtr option, QWidget *parent)
 	: OptionBase(title, option, parent)
 {
     myCheckBox = new QCheckBox(this);
@@ -232,7 +232,7 @@ OptionBool::~OptionBool()
 
 void OptionBool::onChecked(int state)
 {
-    emit checked((ConfigBool*)myOption, (Qt::CheckState)state);
+    emit checked(myOption.staticCast<ConfigBool>(), (Qt::CheckState)state);
 }
 
 void OptionBool::setCheckState(Qt::CheckState state)
@@ -242,17 +242,17 @@ void OptionBool::setCheckState(Qt::CheckState state)
 
 void OptionBool::readValue()
 {
-    myCheckBox->setChecked(*((ConfigBool*)myOption)->valueRef());
+    myCheckBox->setChecked(*myOption.staticCast<ConfigBool>()->valueRef());
 }
 
 void OptionBool::storeValue()
 {
-    *((ConfigBool*)myOption)->valueRef() = myCheckBox->isChecked();
+    *myOption.staticCast<ConfigBool>()->valueRef() = myCheckBox->isChecked();
 }
 
 /////////////////////////////////////////////
 
-OptionEncoding::OptionEncoding(const QString &title, ConfigString *option, QWidget *parent)
+OptionEncoding::OptionEncoding(const QString &title, ConfigStringPtr option, QWidget *parent)
     : OptionBase(title, option, parent)
 {
     QStringList sl;
@@ -315,19 +315,19 @@ OptionEncoding::~OptionEncoding()
 
 void OptionEncoding::readValue()
 {
-    myComboEnc->lineEdit()->setText(((ConfigString*)myOption)->value());
+    myComboEnc->lineEdit()->setText(myOption.staticCast<ConfigString>()->value());
 }
 
 void OptionEncoding::storeValue()
 {
-    ((ConfigString*)myOption)->setValue(myComboEnc->currentText());
+    myOption.staticCast<ConfigString>()->setValue(myComboEnc->currentText());
 }
 
 /////////////////////////////////////////////
 
 #include "iisStringListEdit.h"
 
-OptionList::OptionList(const QString &title, ConfigList *option, QWidget *parent)
+OptionList::OptionList(const QString &title, ConfigListPtr option, QWidget *parent)
     : OptionBase(title, option, parent)
 {
     myLineEdit = new QLineEdit(this);
@@ -353,7 +353,7 @@ OptionList::~OptionList()
 void OptionList::edit()
 {
     int flags = SLF_Custom;
-    switch (((ConfigList*)myOption)->widgetType()) {
+    switch (myOption.staticCast<ConfigList>()->widgetType()) {
         case ConfigList::File:
             flags |= SLF_Files;
             break;
@@ -378,19 +378,19 @@ void OptionList::edit()
 
 void OptionList::readValue()
 {
-    QStringList sl = ((ConfigList*)myOption)->values();
+    QStringList sl = myOption.staticCast<ConfigList>()->values();
     myLineEdit->setText(sl.join(";"));
 }
 
 void OptionList::storeValue()
 {
     QStringList sl = myLineEdit->text().split(";");
-    ((ConfigList*)myOption)->setValue(sl);
+    myOption.staticCast<ConfigList>()->setValue(sl);
 }
 
 /////////////////////////////////////////////
 
-OptionInt::OptionInt(const QString &title, ConfigInt *option, QWidget *parent)
+OptionInt::OptionInt(const QString &title, ConfigIntPtr option, QWidget *parent)
     : OptionBase(title, option, parent)
 {
     mySpinBox = new QSpinBox(this);
@@ -410,12 +410,12 @@ OptionInt::~OptionInt()
 
 void OptionInt::readValue()
 {
-    mySpinBox->setValue(*((ConfigInt*)myOption)->valueRef());
+    mySpinBox->setValue(*myOption.staticCast<ConfigInt>()->valueRef());
 }
 
 void OptionInt::storeValue()
 {
-    *((ConfigInt*)myOption)->valueRef() = mySpinBox->value();
+    *myOption.staticCast<ConfigInt>()->valueRef() = mySpinBox->value();
 }
 
 /////////////////////////////////////////////

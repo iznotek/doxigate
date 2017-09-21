@@ -10,52 +10,52 @@
 
 void setEnumValue(const char *name, const QString &value)
 {
-    ConfigEnum *ce = getEnum(name);
-    if (ce)
+    ConfigEnumPtr ce = getEnum(name);
+    if (!ce.isNull())
         ce->setValue(value);
 }
 
 void setStringValue(const char *name, const QString &value)
 {
-    ConfigString *ce = getString(name);
-    if (ce)
+    ConfigStringPtr ce = getString(name);
+    if (!ce.isNull())
         ce->setValue(value);
 }
 
 void setBoolValue(const char *name, bool value)
 {
-    ConfigBool *ce = getBool(name);
-    if (ce)
+    ConfigBoolPtr ce = getBool(name);
+    if (!ce.isNull())
         *ce->valueRef() = value;
 }
 
 void setIntValue(const char *name, int value)
 {
-    ConfigInt *ce = getInt(name);
-    if (ce)
+    ConfigIntPtr ce = getInt(name);
+    if (!ce.isNull())
         *ce->valueRef() = value;
 }
 
 
 
-ConfigEnum* getEnum(const char *name)
+ConfigEnumPtr getEnum(const char *name)
 {
-    return (ConfigEnum*) Config::instance()->get(name);
+    return Config::instance()->get(name).staticCast<ConfigEnum>();
 }
 
-ConfigString* getString(const char *name)
+ConfigStringPtr getString(const char *name)
 {
-    return (ConfigString*) Config::instance()->get(name);
+    return Config::instance()->get(name).staticCast<ConfigString>();
 }
 
-ConfigBool* getBool(const char *name)
+ConfigBoolPtr getBool(const char *name)
 {
-    return (ConfigBool*) Config::instance()->get(name);
+    return Config::instance()->get(name).staticCast<ConfigBool>();
 }
 
-ConfigInt* getInt(const char *name)
+ConfigIntPtr getInt(const char *name)
 {
-    return (ConfigInt*) Config::instance()->get(name);
+    return Config::instance()->get(name).staticCast<ConfigInt>();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -252,33 +252,33 @@ void SetupBasePage::addSection(const QString &title)
 
 void SetupBasePage::addOption(const QString &title, const char *id)
 {
-	ConfigOption *option = Config::instance()->get(id);
+    ConfigOptionPtr option = Config::instance()->get(id);
 	if (!option)
 		return;
 
 	switch(option->kind()) {
 		case ConfigOption::O_String:
-		    addOptionWidget(new OptionString(title, (ConfigString*)option, this));
+            addOptionWidget(new OptionString(title, option.staticCast<ConfigString>(), this));
 			break;
 
 		case ConfigOption::O_Enum:
-		    addOptionWidget(new OptionEnum(title, (ConfigEnum*)option, this));
+            addOptionWidget(new OptionEnum(title, option.staticCast<ConfigEnum>(), this));
 			break;
 
 		case ConfigOption::O_List:
-		    addOptionWidget(new OptionList(title, (ConfigList*)option, this));
+            addOptionWidget(new OptionList(title, option.staticCast<ConfigList>(), this));
 			break;
 
 		case ConfigOption::O_Bool: {
-		    OptionBool *ob = new OptionBool(title, (ConfigBool*)option, this);
-		    connect(ob, SIGNAL(checked(ConfigBool*, Qt::CheckState)),
-		            this, SIGNAL(optionChecked(ConfigBool*, Qt::CheckState)));
+            OptionBool *ob = new OptionBool(title, option.staticCast<ConfigBool>(), this);
+            connect(ob, SIGNAL(checked(ConfigBoolPtr, Qt::CheckState)),
+                    this, SIGNAL(optionChecked(ConfigBoolPtr, Qt::CheckState)));
 		    addOptionWidget(ob);
 		}
 			break;
 
 		case ConfigOption::O_Int:
-		    addOptionWidget(new OptionInt(title, (ConfigInt*)option, this));
+            addOptionWidget(new OptionInt(title, option.staticCast<ConfigInt>(), this));
 			break;
 
 		case ConfigOption::O_Info:
@@ -331,7 +331,7 @@ void SetupBasePage::storeValues()
 
 void SetupBasePage::reloadWidget(const char *id)
 {
-    ConfigOption *co = Config::instance()->get(id);
+    ConfigOptionPtr co = Config::instance()->get(id);
     if (co) {
         if (myWidgetMap.contains(co)) {
             OptionBase *ob = myWidgetMap[co];
@@ -379,7 +379,7 @@ void SetupBasePage::onOptionOfflighted(OptionBase*)
     myHintTimer->stop();
 }
 
-void SetupBasePage::onOptionChecked(ConfigBool *option, Qt::CheckState check)
+void SetupBasePage::onOptionChecked(ConfigBoolPtr option, Qt::CheckState check)
 {
     OptionBool *ob = (OptionBool*) myWidgetMap[option];
     if (!ob)
